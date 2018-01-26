@@ -144,7 +144,7 @@ else
     mkdir -p $BUILD_DIR/packages
     cp -R $MONO_CACHE_DIR/packages/* $BUILD_DIR/packages
   fi
-  mono $BUILDPACK_DIR/nuget.exe restore -NonInteractive | indent
+  mono $BUILDPACK_DIR/nuget.exe restore -NonInteractive $SLN | indent
   # and copy it back
   if [ -d $BUILD_DIR/packages ]; then
     mkdir -p $MONO_CACHE_DIR/packages
