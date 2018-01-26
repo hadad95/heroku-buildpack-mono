@@ -38,7 +38,7 @@ if [[ -f $BUILD_DIR/.mono ]]; then
   source $BUILD_DIR/.mono
 fi
 
-if [[ $MONO_TYPE != "full" && $MONO_TYPE != "minimal" ]]; then
+if [[ $MONO_TYPE != "full" && $MONO_TYPE != "minimal" && $MONO_TYPE != "full-fsharp" && $MONO_TYPE != "minimal-fsharp" ]]; then
   warn "MONO_TYPE must be 'minimal' or 'full': '$MONO_TYPE'"
   warn "Setting MONO_TYPE to 'full'"
   MONO_TYPE="full"
@@ -96,8 +96,7 @@ export MONO_CONFIG="/app/mono/etc/mono/config"
 # install certificates from the host
 # using this ensures that the certs are managed by heroku
 topic "Installing SSL certificates"
-mcs $BUILDPACK_DIR/scripts/cert-sync.cs /r:Mono.Security.dll /out:$BUILDPACK_DIR/cert-sync.exe
-mono $BUILDPACK_DIR/cert-sync.exe --quiet --user /etc/ssl/certs/ca-certificates.crt
+cert-sync --quiet --user /etc/ssl/certs/ca-certificates.crt
 
 # most of these are needed for tools like mkbundle to work
 # (and will only work with the 'full' mono build)
